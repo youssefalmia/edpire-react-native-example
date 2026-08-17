@@ -1,0 +1,17 @@
+{
+  "name": "edpire-react-native-example-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Minimal token endpoint for the Edpire React Native example. Keeps the API key off the device.",
+  "scripts": {
+    "start": "node --env-file=.env server.mjs",
+    "dev": "node --env-file=.env --watch server.mjs"
+  },
+  "dependencies": {
+    "@edpire/sdk": "^0.6.10"
+  },
+  "engines": {
+    "node": ">=20.6"
+  }
+}
