@@ -150,15 +150,12 @@ export function AssessmentScreen({ assessmentId, onClose }: Props) {
       />
 
       {/*
-        Deliberately NOT navigating away on completion.
+        onComplete does not navigate away.
 
         After submitting, the player rewrites itself into the corrected paper: a
         score banner, per-question marks, and the answer key on anything the
-        learner missed. That review is most of the value of an assessment, and
-        replacing it with a native "you scored 1/4" screen throws it away.
-
-        So this bar appears underneath instead, and the corrections stay on
-        screen for as long as the learner wants them.
+        learner missed. This bar appears underneath instead, leaving those
+        corrections on screen.
       */}
       {result && <ResultBar result={result} onClose={onClose} />}
     </SafeAreaView>

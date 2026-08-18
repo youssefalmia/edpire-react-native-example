@@ -31,13 +31,8 @@ const client = new EdpireClient({ apiKey: API_KEY, baseUrl: BASE_URL })
 /**
  * The published assessments this org can offer.
  *
- * This is the pattern you want in your own admin: list assessments by title and
- * let a human pick one, then store the ID it returns. Nobody should ever read
- * or type an Edpire UUID. The example has no admin screen, so it does the same
- * thing in miniature.
- *
- * The API key is used here, on the server. The app only ever sees titles and
- * IDs, which are not secret.
+ * The API key is used here, on the server. The app receives only titles and
+ * IDs, neither of which is secret, and shows them for the learner to pick.
  */
 async function listPublished() {
   const { items } = await client.getAssessments({ status: "published", limit: PICKER_LIMIT })

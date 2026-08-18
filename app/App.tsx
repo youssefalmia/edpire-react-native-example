@@ -38,14 +38,7 @@ export default function App() {
   );
 }
 
-/**
- * Lists the assessments your server offers, and opens the one you tap.
- *
- * This is the whole point of the screen: **you never type an Edpire ID.** Your
- * server knows them, this list shows titles, and the ID travels invisibly from
- * the tap into the token request. Build the same thing in your own admin and
- * nobody on your team will ever paste a UUID.
- */
+/** Lists the assessments your server offers, and opens the one you tap. */
 function Home({ onPick }: { onPick: (id: string) => void }) {
   const [items, setItems] = useState<AssessmentSummary[] | null>(null);
   const [error, setError] = useState<string | null>(null);

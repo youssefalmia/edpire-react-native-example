@@ -80,12 +80,8 @@ export type AssessmentSummary = {
 /**
  * Ask YOUR server which assessments the learner can play.
  *
- * This is the pattern you want in your own product: show people titles and let
- * them pick. Nobody should ever read or type an Edpire UUID. The ID travels
- * invisibly, from this list into the token request.
- *
  * Your server calls Edpire with the API key and returns only titles and IDs,
- * neither of which is secret.
+ * neither of which is secret. The ID goes straight into the token request.
  */
 export async function listAssessments(): Promise<AssessmentSummary[]> {
   const url = `${Config.tokenServer}/api/edpire/assessments`;

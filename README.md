@@ -89,7 +89,7 @@ npm install
 npx expo run:android      # or: npx expo run:ios
 ```
 
-**Notice there is nothing to configure.** The app asks your server which assessments are published and lists them by title, so nobody ever reads or types an Edpire UUID. That is the pattern you want in your own admin too.
+The app lists your published assessments by title. Tap one to play it.
 
 **You do not need to configure your IP address.** The app reads the Expo dev server's own host and points the token server at the same machine, which is correct for both a physical device and an emulator. Set `EXPO_PUBLIC_TOKEN_SERVER` only when you want to override it, which you will in production.
 
@@ -143,7 +143,7 @@ The bundle carries its own React inside a closure, so the React version in your 
 
 When the learner submits, the player rewrites itself into the corrected paper: a score banner, per-question marks, and the answer key on anything they missed. Screens 3 and 4 above are that view.
 
-That review is most of the value of an assessment, so this example does **not** navigate away in `onComplete`. It records the result and shows a thin bar underneath, leaving the corrections on screen for as long as the learner wants. Replacing the player with a native "you scored 1/4" screen is easy to write and throws away the part that teaches.
+So this example does **not** navigate away in `onComplete`. It records the result and shows a thin bar underneath, leaving the corrections on screen for as long as the learner wants.
 
 ## Treat the result message as a UI hint
 
