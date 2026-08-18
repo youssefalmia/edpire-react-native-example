@@ -69,3 +69,48 @@ export async function mintToken(assessmentId: string): Promise<string> {
 
   return body.token;
 }
+
+/** One published assessment, as offered by your server's picker endpoint. */
+export type AssessmentSummary = {
+  id: string;
+  title: string;
+  exerciseCount: number | null;
+};
+
+/**
+ * Ask YOUR server which assessments the learner can play.
+ *
+ * This is the pattern you want in your own product: show people titles and let
+ * them pick. Nobody should ever read or type an Edpire UUID. The ID travels
+ * invisibly, from this list into the token request.
+ *
+ * Your server calls Edpire with the API key and returns only titles and IDs,
+ * neither of which is secret.
+ */
+export async function listAssessments(): Promise<AssessmentSummary[]> {
+  const url = `${Config.tokenServer}/api/edpire/assessments`;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15_000);
+
+  let res: Response;
+  try {
+    res = await fetch(url, { signal: controller.signal });
+  } catch (cause) {
+    throw new TokenError(
+      `Could not reach the token server at ${Config.tokenServer}.\n\n` +
+        'Is it running? (npm start in server/)\n' +
+        'Is the device on the same network as your laptop?\n\n' +
+        String(cause),
+    );
+  } finally {
+    clearTimeout(timeout);
+  }
+
+  if (!res.ok) {
+    throw new TokenError(`Token server returned ${res.status}: ${await res.text()}`);
+  }
+
+  const body = (await res.json()) as { assessments?: AssessmentSummary[] };
+  return body.assessments ?? [];
+}

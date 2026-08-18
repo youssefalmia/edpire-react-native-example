@@ -6,13 +6,13 @@ The Edpire player runs inside a WebView, so this same approach works in Expo, ba
 
 <table>
 <tr>
-<td width="25%"><img src="docs/screenshots/01-home.png" alt="Launcher screen" /></td>
+<td width="25%"><img src="docs/screenshots/01-home.png" alt="Picker listing published assessments by title" /></td>
 <td width="25%"><img src="docs/screenshots/02-assessment.png" alt="Assessment rendering in a WebView" /></td>
 <td width="25%"><img src="docs/screenshots/03-corrected.png" alt="Corrected assessment after submitting" /></td>
 <td width="25%"><img src="docs/screenshots/04-dragdrop.png" alt="Drag and drop question with the answer key revealed" /></td>
 </tr>
 <tr>
-<td align="center"><sub><b>1.</b> Your app</sub></td>
+<td align="center"><sub><b>1.</b> Pick by title, not by ID</sub></td>
 <td align="center"><sub><b>2.</b> The player, in a WebView</sub></td>
 <td align="center"><sub><b>3.</b> Graded in place</sub></td>
 <td align="center"><sub><b>4.</b> Answer key revealed</sub></td>
@@ -34,7 +34,7 @@ Three files in `app/src/` are the entire integration, and they are worth reading
 
 | File | What it does |
 |---|---|
-| `tokenService.ts` | Asks your server for a token |
+| `tokenService.ts` | Lists assessments, and asks your server for a token |
 | `buildPlayerHtml.ts` | Builds the page the WebView runs. The only place native and web meet |
 | `AssessmentScreen.tsx` | Renders the WebView and handles messages coming back |
 
@@ -71,16 +71,25 @@ cp .env.example .env      # paste your EDPIRE_API_KEY into it
 npm start
 ```
 
-Verify: `curl http://localhost:8787/health` returns `{"ok":true}`.
+On start it prints the published assessments it can see, which is the quickest way to confirm your API key works:
+
+```
+Published assessments (showing up to 5):
+  72aff028-8133-46b5-8330-ed2938a2344b  Ma première évaluation
+  8bc07441-a4b1-4f06-88b3-9d7ccc7426e2  Test to fix AI issue
+```
+
+If that list is empty, create and publish an assessment in Edpire first. Only published assessments can be played, and the app will tell you the same thing with a link to the [quickstart](https://docs.edpire.com/quickstart).
 
 ### 2. Run the app
 
 ```bash
 cd app
 npm install
-cp .env.example .env      # set EXPO_PUBLIC_ASSESSMENT_ID
 npx expo run:android      # or: npx expo run:ios
 ```
+
+**Notice there is nothing to configure.** The app asks your server which assessments are published and lists them by title, so nobody ever reads or types an Edpire UUID. That is the pattern you want in your own admin too.
 
 **You do not need to configure your IP address.** The app reads the Expo dev server's own host and points the token server at the same machine, which is correct for both a physical device and an emulator. Set `EXPO_PUBLIC_TOKEN_SERVER` only when you want to override it, which you will in production.
 
@@ -170,7 +179,7 @@ Every one of these is already handled in the code. They are listed because each 
 
 | Symptom | Cause |
 |---|---|
-| "No assessment configured" | `EXPO_PUBLIC_ASSESSMENT_ID` is unset. Environment variables are read when the bundle is built, so restart `expo start` rather than reloading. |
+| The list is empty | Nothing is published in your org. Create and publish an assessment in Edpire, then pull to refresh. Drafts never appear. |
 | Stuck on "Minting a token" | The device cannot reach the token server. Check it is running, and that the device is on the same network as your laptop. |
 | "Failed to connect to Edpire" | The device reached your server but the WebView could not reach Edpire. Check connectivity, and that you are on `@edpire/sdk` 0.6.10 or later. |
 | Player area is blank | The container collapsed to zero height, or the SDK bundle did not load. Check your terminal for `[webview]` lines. |
