@@ -123,7 +123,7 @@ and inside that HTML:
 
 ```html
 <div id="root" style="height: 100vh"></div>
-<script src="https://cdn.jsdelivr.net/npm/@edpire/sdk@0.6.10/dist/umd/index.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@edpire/sdk@0.6.11/dist/umd/index.global.js"></script>
 <script>
   EdpireSDK.EdpireAssessment.mount({
     token: "...",
@@ -181,7 +181,7 @@ Every one of these is already handled in the code. They are listed because each 
 |---|---|
 | The list is empty | Nothing is published in your org. Create and publish an assessment in Edpire, then pull to refresh. Drafts never appear. |
 | Stuck on "Minting a token" | The device cannot reach the token server. Check it is running, and that the device is on the same network as your laptop. |
-| "Failed to connect to Edpire" | The device reached your server but the WebView could not reach Edpire. Check connectivity, and that you are on `@edpire/sdk` 0.6.10 or later. |
+| "Failed to connect to Edpire" | The device reached your server but the WebView could not reach Edpire. Check connectivity, and that you are on `@edpire/sdk` 0.6.11 or later. |
 | Player area is blank | The container collapsed to zero height, or the SDK bundle did not load. Check your terminal for `[webview]` lines. |
 | `SDK location not found` | `ANDROID_HOME` is not set. React Native needs it, unlike Flutter which manages the path itself. |
 | Gradle fails with `IllegalArgumentException: <version>` | Android Studio ships its own JDK, currently 25, which Gradle 8.x cannot parse. Point `JAVA_HOME` at a JDK 21. |
@@ -203,7 +203,9 @@ Deliberately. Bring these from your own app:
 
 ## Verified on
 
-Expo SDK 57, React Native 0.86, `react-native-webview`, `@edpire/sdk` 0.6.10, on an Android 15 emulator. iOS uses the same WebView approach and the same token endpoint.
+Expo SDK 57, React Native 0.86, `react-native-webview`, on an Android 15 emulator. iOS uses the same WebView approach and the same token endpoint.
+
+The device run used `@edpire/sdk` 0.6.10. The pin is now 0.6.11, whose bundle was verified loading and rendering from an opaque origin, which is the condition a WebView creates.
 
 ## Documentation
 

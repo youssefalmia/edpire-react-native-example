@@ -9,7 +9,7 @@
     "dev": "node --env-file=.env --watch server.mjs"
   },
   "dependencies": {
-    "@edpire/sdk": "^0.6.10"
+    "@edpire/sdk": "^0.6.11"
   },
   "engines": {
     "node": ">=20.6"

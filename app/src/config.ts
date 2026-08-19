@@ -98,7 +98,7 @@ export const Config = {
    * Pinned deliberately. `@edpire/sdk` is pre-1.0, so a minor release can
    * change behaviour under you. Bump this on purpose, not by accident.
    */
-  sdkVersion: '0.6.10',
+  sdkVersion: '0.6.11',
 
   /**
    * The assessment's own learner-facing language, which decides text direction.
